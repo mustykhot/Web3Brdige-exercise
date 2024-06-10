@@ -34,15 +34,40 @@ const Home = () => {
     e.preventDefault();
     const storedData = localStorage.getItem("formDataList");
     const formDataList: FormType[] = storedData ? JSON.parse(storedData) : [];
-    const emailExists = formDataList.some(
-      (data) => data.email === formData.email
+    let individualDesks = formDataList.filter(
+      (item) => item.type === "individual"
     );
-    if (emailExists) {
-      alert("This email already exists in the system.");
-    } else {
-      formDataList.push(formData);
-      localStorage.setItem("formDataList", JSON.stringify(formDataList));
-      alert("Booking saved");
+    let teamDesks = formDataList.filter((item) => item.type === "team");
+    if (formData.type === "individual") {
+      if (individualDesks.length >= 10) {
+        alert("Indiviual desks are totally booked.");
+      } else {
+        const emailExists = formDataList.some(
+          (data) => data.email === formData.email
+        );
+        if (emailExists) {
+          alert("This email already exists in the system.");
+        } else {
+          formDataList.push(formData);
+          localStorage.setItem("formDataList", JSON.stringify(formDataList));
+          alert("Booking saved");
+        }
+      }
+    } else if (formData.type === "team") {
+      if (teamDesks.length >= 5) {
+        alert("Team desks are totally booked.");
+      } else {
+        const emailExists = formDataList.some(
+          (data) => data.email === formData.email
+        );
+        if (emailExists) {
+          alert("This email already exists in the system.");
+        } else {
+          formDataList.push(formData);
+          localStorage.setItem("formDataList", JSON.stringify(formDataList));
+          alert("Booking saved");
+        }
+      }
     }
   };
   useEffect(() => {
