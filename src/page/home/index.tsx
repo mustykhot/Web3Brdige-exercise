@@ -38,30 +38,24 @@ const Home = () => {
       (item) => item.type === "individual"
     );
     let teamDesks = formDataList.filter((item) => item.type === "team");
-    if (formData.type === "individual") {
-      if (individualDesks.length >= 10) {
-        alert("Indiviual desks are totally booked.");
-      } else {
-        const emailExists = formDataList.some(
-          (data) => data.email === formData.email
-        );
-        if (emailExists) {
-          alert("This email already exists in the system.");
+    const emailExists = formDataList.some(
+      (data) => data.email === formData.email
+    );
+    if (emailExists) {
+      alert("This email already exists in the system.");
+    } else {
+      if (formData.type === "individual") {
+        if (individualDesks.length >= 10) {
+          alert("Indiviual desks are totally booked.");
         } else {
           formDataList.push(formData);
           localStorage.setItem("formDataList", JSON.stringify(formDataList));
           alert("Booking saved");
         }
       }
-    } else if (formData.type === "team") {
-      if (teamDesks.length >= 5) {
-        alert("Team desks are totally booked.");
-      } else {
-        const emailExists = formDataList.some(
-          (data) => data.email === formData.email
-        );
-        if (emailExists) {
-          alert("This email already exists in the system.");
+      if (formData.type === "team") {
+        if (teamDesks.length >= 5) {
+          alert("Team desks are totally booked.");
         } else {
           formDataList.push(formData);
           localStorage.setItem("formDataList", JSON.stringify(formDataList));
@@ -101,7 +95,7 @@ const Home = () => {
           />
         </div>
         <div className="input_box">
-          <label htmlFor="email">Hours to book</label>
+          <label htmlFor="email">Usage Hours</label>
           <input
             type="number"
             required
